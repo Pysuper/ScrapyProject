@@ -6,7 +6,7 @@ import scrapy
 
 
 class ZhaopinSpider(scrapy.Spider):
-    name = 'tencent_3'
+    name = 'tencent_4'
     allowed_domains = ['tencent.com']
     base_url = 'https://careers.tencent.com/tencentcareer/api/post/Query?timestamp=1566111052462&pageSize=10&language=zh-cn&area=cn&pageIndex={}'
 
