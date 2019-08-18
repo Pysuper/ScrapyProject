@@ -68,7 +68,9 @@ ROBOTSTXT_OBEY = True
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'tencent.pipelines.TencentPipeline': 300,
-   'tencent.pipelines.MongodbPipeline': 301,
+   'tencent.pipelines.MongodbListItemPipeline': 301,
+   'tencent.pipelines.MongodbDetailItemPipeline': 302,
+
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
