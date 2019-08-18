@@ -43,7 +43,8 @@ class ZhaopinSpider(scrapy.Spider):
             yield scrapy.Request(
                 url=detail_info + post_id,
                 callback=self.parse_detail,  # 设置回调解析函数, 这里发送的request请求对象, parse()解析函数处理不了这里的请求
-                meta={"item": item}  # 用meta携带item, response.meta, 字典类型
+                meta={"item": item},    # 用meta携带item, response.meta, 字典类型
+                dont_filter=False   # 如果请求发送过了, 是否过滤
             )
             break  # 测试
 
