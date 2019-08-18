@@ -8,6 +8,8 @@ class TencentItem(scrapy.Item):
     Category = scrapy.Field()  # 分类
     Time = scrapy.Field()  # 发布日期
     URL = scrapy.Field()  # 跳转链接
+    Responsibility = scrapy.Field()  # 描述
+    Requirement = scrapy.Field()  # 岗位需求
 
 
 class DetailItem(scrapy.Item):
