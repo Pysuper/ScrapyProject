@@ -1,13 +1,14 @@
 import scrapy
 from job.items import JobItem
-from urllib.parse import quote
+from urllib.parse import quote  # 查询字符串加密
 
 
 class A51jobSpider(scrapy.Spider):
     name = '51job'
     allowed_domains = ['search.51job.com']
-    keyword = "python web"  # 去掉指定的岗位名称，全部数据10万条
-    start_urls = ['https://search.51job.com/list/000000,000000,0000,00,9,99,{},2,1.html?'.format(quote(quote(keyword)))]
+    keyword = "%2520"  # 去掉指定的岗位名称，全部数据10万条
+    start_urls = ['https://search.51job.com/list/000000,000000,0000,00,9,99,%2520,2,1.html?']
+    # start_urls = ['https://search.51job.com/list/000000,000000,0000,00,9,99,keyword,2,page.html?']
 
     def parse(self, response):
         """
@@ -50,8 +51,8 @@ class A51jobSpider(scrapy.Spider):
                 item["job_info"] = ''.join(div.xpath('./div[1]/div[1]/p/span/text()').extract().strip())
 
             item["functional_category"] = div.xpath('./div[1]/div[1]/div[1]/p[1]/a/text()').extract_first()
-            if item["functional_category"]:
-                item["functional_category"].replace("\n", "").replace("\t", "").replace("\r", "").strip()  # 替换和去除空格
+            if item["functional_category"] is not None:
+                item["functional_category"] = item["functional_category"].replace("\n", "").replace("\t", "").replace("\r", "").strip()  # 替换和去除空格
 
             item["job_keyword"] = ', '.join(div.xpath('./div[1]/div[1]/div[1]/p[2]/a/text()').extract())
             item["location_work"] = div.xpath('./div[2]/div/p/text()').extract_first().strip()

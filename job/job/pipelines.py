@@ -2,7 +2,6 @@
 自定义管道
 """
 from pprint import pprint
-from job.items import JobItem
 from pymongo import MongoClient
 
 
@@ -19,6 +18,5 @@ class MongodbJobItemPipeline(object):
         self.db = client.job
 
     def process_item(self, item, spider):
-        if isinstance(item, JobItem):  # 对不同的item进行判断, 属于不同的模型类
-            self.db.job.insert(dict(item))
+        self.db.job.insert(dict(item))
         return item

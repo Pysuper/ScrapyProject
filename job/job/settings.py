@@ -49,7 +49,7 @@ DEFAULT_REQUEST_HEADERS = {
 # 管道
 ITEM_PIPELINES = {
    'job.pipelines.JobPipeline': 300,
-   # 'job.pipelines.MongodbJobItemPipeline': 301,
+   'job.pipelines.MongodbJobItemPipeline': 301,
 }
 
 # 用户名和密码
