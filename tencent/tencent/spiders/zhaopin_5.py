@@ -17,7 +17,7 @@ class ZhaopinSpider(scrapy.Spider):
             yield scrapy.Request(
                 url=self.base_url.format(page),
             )
-            break  # 测试
+            # break  # 测试
 
     def parse(self, response):
         """
@@ -46,7 +46,7 @@ class ZhaopinSpider(scrapy.Spider):
                 meta={"item": item},    # 用meta携带item, response.meta, 字典类型
                 dont_filter=False   # 如果请求发送过了, 是否过滤
             )
-            break  # 测试
+            # break  # 测试
 
     def parse_detail(self, response):
         """
