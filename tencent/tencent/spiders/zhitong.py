@@ -7,6 +7,7 @@ from tencent.items import ZhiTongItem
 
 class ZhitongSpider(scrapy.Spider):
     name = 'zhitong'
+    page = 0
     allowed_domains = ['www.job5156.com']
     start_urls = ["http://www.job5156.com/s/result/ajax.json?pageNo=", ]
 
@@ -28,7 +29,7 @@ class ZhitongSpider(scrapy.Spider):
                 item['nature'] = result['comInfo']['propertyStr']
                 item['requirement'] = result['posDesc'].replace('\n', '').replace('\r', '').strip()
                 yield item
+            self.page = self.page + 1
             yield scrapy.Request(
-                url=self.start_urls[0] + str(page + 1),
-                callback=self.parse
+                url=self.start_urls[0] + str(self.page),
             )

@@ -59,7 +59,7 @@ ITEM_PIPELINES = {
     'tencent.pipelines.ZhitongPipeline': 301,
     # 'tencent.pipelines.MongodbListItemPipeline': 302,
     # 'tencent.pipelines.MongodbDetailItemPipeline': 303,
-    'tencent.pipelines.MongodbZhitongItemPipeline': 304,
+    'tencent.pipelines.MongodbZhitongItemPipeline': 302,
 }
 
 # 设置用户名和密码
