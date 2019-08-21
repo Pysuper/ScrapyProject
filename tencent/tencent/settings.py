@@ -55,10 +55,11 @@ DEFAULT_REQUEST_HEADERS = {
 
 # 设置管道
 ITEM_PIPELINES = {
-    'tencent.pipelines.TencentPipeline': 300,
-    'tencent.pipelines.MongodbListItemPipeline': 301,
-    'tencent.pipelines.MongodbDetailItemPipeline': 302,
-
+    # 'tencent.pipelines.TencentPipeline': 300,
+    'tencent.pipelines.ZhitongPipeline': 301,
+    # 'tencent.pipelines.MongodbListItemPipeline': 302,
+    # 'tencent.pipelines.MongodbDetailItemPipeline': 303,
+    'tencent.pipelines.MongodbZhitongItemPipeline': 304,
 }
 
 # 设置用户名和密码

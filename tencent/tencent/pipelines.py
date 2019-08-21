@@ -39,3 +39,27 @@ class MongodbDetailItemPipeline(object):
         if isinstance(item, DetailItem):  # 对不同的item进行判断, 属于不同的模型类
             self.db.detailitem.insert(dict(item))
         return item
+
+
+class ZhitongPipeline(object):
+    def process_item(self, item, spider):
+        """
+        接收中央引擎的item对象, 通过管道处理, 返回
+        :param item: 数据: 爬虫==>中央引擎==>数据队列
+        :param spider:
+        :return:
+        """
+        pprint(dict(item))
+        return item
+
+
+class MongodbZhitongItemPipeline(object):
+    """MongoDB管道 ==> 存储列表页数据"""
+
+    def open_spider(self, spider):
+        client = MongoClient(host='127.0.0.1', port=27017)
+        self.db = client.zhitong
+
+    def process_item(self, item, spider):
+        self.db.items.insert(dict(item))
+        return item
