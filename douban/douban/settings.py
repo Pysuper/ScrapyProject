@@ -38,7 +38,8 @@ DEFAULT_REQUEST_HEADERS = {
 # }
 
 ITEM_PIPELINES = {
-    'douban.pipelines.DoubanPipeline': 300,
+    # 'douban.pipelines.DoubanPipeline': 300,
+    'douban.pipelines.DoubanImagePipeline': 301,
 }
 
 # AUTOTHROTTLE_ENABLED = True
@@ -52,3 +53,6 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# 配置图片存储路径
+IMAGES_STORE = "images"
