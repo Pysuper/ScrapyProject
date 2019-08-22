@@ -1,3 +1,5 @@
+import os
+
 BOT_NAME = 'meizitu'
 
 SPIDER_MODULES = ['meizitu.spiders']
@@ -22,6 +24,7 @@ CONCURRENT_REQUESTS = 32
 DEFAULT_REQUEST_HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Language': 'en',
+    'Referer': 'https://www.mzitu.com'
 }
 
 # 爬虫中间件
@@ -43,6 +46,7 @@ DEFAULT_REQUEST_HEADERS = {
 ITEM_PIPELINES = {
     'meizitu.pipelines.MeizituPipeline': 300,
     'meizitu.pipelines.SaveImagePipeline': 301,
+    'meizitu.pipelines.MongoDBPipeline': 302,
 }
 
 # 用户名和密码
@@ -58,3 +62,5 @@ ITEM_PIPELINES = {
 # HTTPCACHE_DIR = 'httpcache'
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+IMAGES_STORE = os.path.join(os.path.dirname(__file__), 'images')

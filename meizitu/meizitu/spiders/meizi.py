@@ -22,6 +22,7 @@ class MeiziSpider(scrapy.Spider):
                 meta={'item': item},
                 dont_filter=True
             )
+            break
 
     def parse_list(self, response):
         # 获取组图列表
@@ -45,6 +46,7 @@ class MeiziSpider(scrapy.Spider):
                     meta={'item': item},
                     dont_filter=True
                 )
+                break
         else:
             # li_list没有值的时候,就是街拍和自拍的 ==> 在这里处理 对于all(每日更新的未处理)
             result_list = response.xpath("//div[@id='comments']/ul/li/div/p/img")
@@ -63,6 +65,7 @@ class MeiziSpider(scrapy.Spider):
                             meta={'item': response.meta["item"]},
                             dont_filter=True
                         )
+                        break
 
     def parse_detail(self, response):
         # 获取图片信息
@@ -79,6 +82,7 @@ class MeiziSpider(scrapy.Spider):
                     meta={'item': response.meta["item"]},
                     dont_filter=False
                 )
+                break
 
 
 """
