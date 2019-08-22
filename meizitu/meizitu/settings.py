@@ -24,7 +24,8 @@ CONCURRENT_REQUESTS = 32
 DEFAULT_REQUEST_HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Accept-Language': 'en',
-    'Referer': 'https://www.mzitu.com'
+    'Referer': 'https://www.mzitu.com',
+    'Upgrade-Insecure-Requests': 1,
 }
 
 # 爬虫中间件
@@ -45,8 +46,8 @@ DEFAULT_REQUEST_HEADERS = {
 # 管道
 ITEM_PIPELINES = {
     'meizitu.pipelines.MeizituPipeline': 300,
-    'meizitu.pipelines.SaveImagePipeline': 301,
-    'meizitu.pipelines.MongoDBPipeline': 302,
+    # 'meizitu.pipelines.SaveImagePipeline': 301,
+    # 'meizitu.pipelines.MongoDBPipeline': 302,
 }
 
 # 用户名和密码

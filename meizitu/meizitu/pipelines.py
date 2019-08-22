@@ -1,4 +1,6 @@
 import os
+import re
+import time
 
 import scrapy
 from pymongo import MongoClient
@@ -7,41 +9,45 @@ from scrapy.pipelines.images import ImagesPipeline
 
 class MeizituPipeline(object):
     def process_item(self, item, spider):
+        print(item)
         return item
 
 
 class SaveImagePipeline(ImagesPipeline):
     """保存图片"""
 
-    # def get_media_requests(self, item, info):
-    #     # 在发送下载请求之前调用，其实这个方法本身就是去发送下载请求的
-    #     yield scrapy.Request(url=item["img_url"], meta={"item": item})
-
-    def item_completed(self, results, item, info):
-        """
-        esults是一个list 第一个为图片下载状态,对应OK  第二个是一个tupled其中可以为path的字段对应存储路径,而item['front_image_path']是我们自定义字段,保存在item中
-        :param results:
-        :param item:
-        :param info:
-        :return:
-        """
+    def get_media_requests(self, item, info):
+        # 在发送下载请求之前调用，其实这个方法本身就是去发送下载请求的
+        # print("save_image", item)
         if not os.path.exists('images'):
             os.mkdir('images')
         if not os.path.exists('images' + '/' + item["category_1_title"]):
             os.mkdir('images' + '/' + item["category_1_title"])
-        if item["group_name"] != '':  # 区分分类和自拍
+        if item["group_name"] == '':  # 自拍
             if not os.path.exists('images' + '/' + item["category_1_title"] + '/' + item["group_name"]):
                 os.mkdir('images' + '/' + item["category_1_title"] + '/' + item["group_name"])
+            for url in item["group_href_urls"]:
+                item["img_url"] = url
+                item["img_name"] = re.findall(r'.*/(.*)', url)[-1]
+                item["img_path"] = item["category_1_title"] + '/' + item["group_name"] + '/' + item["img_name"]
+                yield scrapy.Request(
+                    url=url,
+                    meta={"item": item},
+                    dont_filter=True
+                )
+                time.sleep(1)
 
-        save_path = 'images/' + item["category_1_title"] + '/' + item["img_name"]  # 街拍自拍
-        if item["group_name"] != '':  # 分类
-            save_path = 'images/' + item["category_1_title"] + '/' + item["group_name"] + '/' + item["img_name"]
-        item["img_path"] = save_path
-        return item
-
-    def get_media_requests(self, item, info):
-        # 在发送下载请求之前调用，其实这个方法本身就是去发送下载请求的
-        yield scrapy.Request(url=item["img_url"], meta={"item": item})
+        # save_path = item["category_1_title"] + '/' + item["img_name"]  # 街拍自拍
+        # if item["group_name"] != '':  # 分类
+        #     save_path = item["category_1_title"] + '/' + item["group_name"] + '/' + item["img_name"]
+        # item["img_path"] = save_path
+        # yield scrapy.Request(
+        #     url=item["img_url"],
+        #     meta={"item": item},
+        #     dont_filter=False
+        # )
+        # print(save_path, '----下载完成', item)
+        # time.sleep(5)
 
     def file_path(self, request, response=None, info=None):
         item = request.meta["item"]
