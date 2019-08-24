@@ -30,7 +30,7 @@ class MeiziSpider(scrapy.Spider):
         li_list = response.xpath("//ul[@id='pins']/li/span[1]/a")
         if li_list:
             # # 如果有值就请求: 获取下一页
-            # next_url = response.xpath("//a[text()='下一页»']/@href").extract_first()
+                # next_url = response.xpath("//a[text()='下一页»']/@href").extract_first()
             # yield scrapy.Request(
             #     url=next_url,
             #     callback=self.parse_list,

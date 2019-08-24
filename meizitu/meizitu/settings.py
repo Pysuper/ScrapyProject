@@ -13,7 +13,7 @@ ROBOTSTXT_OBEY = False
 
 CONCURRENT_REQUESTS = 32
 
-# DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 0.1
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
 
@@ -48,6 +48,8 @@ ITEM_PIPELINES = {
     'meizitu.pipelines.MeizituPipeline': 300,
     # 'meizitu.pipelines.SaveImagePipeline': 301,
     # 'meizitu.pipelines.MongoDBPipeline': 302,
+    'meizitu.pipelines.CrawlSaveImagePipeline': 301,
+    'meizitu.pipelines.CrawlMongoDBPipeline': 302,
 }
 
 # 用户名和密码

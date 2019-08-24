@@ -9,7 +9,6 @@ from scrapy.pipelines.images import ImagesPipeline
 
 class MeizituPipeline(object):
     def process_item(self, item, spider):
-        print(item)
         return item
 
 
@@ -64,4 +63,34 @@ class MongoDBPipeline(object):
 
     def process_item(self, item, spider):
         self.db.ing_info.insert(dict(item))
+        return item
+
+
+class CrawlSaveImagePipeline(ImagesPipeline):
+    def get_media_requests(self, item, info):
+        # 自动创建文件夹
+        item["img_path"] = item["img_dir"] + '/' + item["img_name"]
+        if item["img_dir_2"] != "":
+            item["img_path"] = item["img_dir"] + '/' + item["img_dir_2"] + '/' + item["img_name"]
+        yield scrapy.Request(
+            url=item["img_url"],
+            meta={"item": item},
+            dont_filter=True
+        )
+
+    def file_path(self, request, response=None, info=None):
+        # 保存图片
+        item = request.meta["item"]
+        save_path = item["img_path"]
+        return save_path
+
+
+class CrawlMongoDBPipeline(object):
+    def open_spider(self, spider):
+        client = MongoClient(host='127.0.0.1', port=27017)
+        self.db = client.meizitu
+
+    def process_item(self, item, spider):
+        self.db.ing_info.insert(dict(item))
+        print(dict(item))
         return item

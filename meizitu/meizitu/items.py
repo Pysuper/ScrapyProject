@@ -10,5 +10,7 @@ class MeizituItem(scrapy.Item):
     group_2_href = scrapy.Field()
     group_href_urls = scrapy.Field()
     img_url = scrapy.Field()
+    img_dir = scrapy.Field()
+    img_dir_2 = scrapy.Field()
     img_name = scrapy.Field()
     img_path = scrapy.Field()
