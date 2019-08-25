@@ -9,6 +9,7 @@ from scrapy.pipelines.images import ImagesPipeline
 
 class MeizituPipeline(object):
     def process_item(self, item, spider):
+        # print(dict(item))
         return item
 
 

@@ -7,13 +7,14 @@ NEWSPIDER_MODULE = 'meizitu.spiders'
 
 LOG_LEVEL = 'WARNING'
 
-USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
+# 在编写爬虫中间件设置随机UserAgent
+# USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'
 
 ROBOTSTXT_OBEY = False
 
 CONCURRENT_REQUESTS = 32
 
-DOWNLOAD_DELAY = 0.1
+DOWNLOAD_DELAY = 0.3
 # CONCURRENT_REQUESTS_PER_DOMAIN = 16
 # CONCURRENT_REQUESTS_PER_IP = 16
 
@@ -30,13 +31,14 @@ DEFAULT_REQUEST_HEADERS = {
 
 # 爬虫中间件
 # SPIDER_MIDDLEWARES = {
-#    'meizitu.middlewares.MeizituSpiderMiddleware': 543,
+#     'meizitu.middlewares.MeizituSpiderMiddleware': 543,
 # }
 
 # 下载中间件
-# DOWNLOADER_MIDDLEWARES = {
-#    'meizitu.middlewares.MeizituDownloaderMiddleware': 543,
-# }
+DOWNLOADER_MIDDLEWARES = {
+    # 'meizitu.middlewares.MeizituDownloaderMiddleware': 543,
+    'meizitu.middlewares.RandomUserAgentDownloaderMiddleware': 544,
+}
 
 # 扩展
 # EXTENSIONS = {
@@ -67,3 +69,11 @@ ITEM_PIPELINES = {
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 IMAGES_STORE = os.path.join(os.path.dirname(__file__), 'images')
+
+# 配置随机IP
+PROXIES_LIST = [
+    "",
+]
+
+# Ignoring Response, 忽略异常请求
+# HTTPERROR_ALLOWED_CODES = [403]  # 上面报的是403, 就把403加入
